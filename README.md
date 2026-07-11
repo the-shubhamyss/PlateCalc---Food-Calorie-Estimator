@@ -12,8 +12,9 @@ The trained model runs instance segmentation on a new plate photo (with EXIF-ori
 
 Weight estimation
 Each detected class is handled one of two ways:
-Countable items (e.g. banana, egg, apple): connected-component analysis on the mask counts discrete instances, multiplied by an average weight per item.
+Countable items (e.g. banana, egg, apple): connected component analysis on the mask counts discrete instances, multiplied by an average weight per item.
 Area-based items (e.g. rice, soup, sauce): the pixel area of the mask is converted to grams using a per-food density factor.
+Container based items (e.g coffee, soup) : uses volume estimation as area multiplied by depth,
 
 Calorie lookup — For each food class, calories per 100g are fetched from the USDA FDC API (first by a known fdc_id, falling back to a name search, and finally to a generic 140 kcal/100g estimate if no match is found). Results are cached to avoid repeat API calls.
 Output — A pandas DataFrame lists each detected item, its estimated quantity/weight, kcal per 100g, and total calories, sorted by calorie contribution. A side-by-side plot shows the segmented detections and a pie chart of calorie contribution per item.
